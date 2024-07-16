@@ -164,7 +164,7 @@ function ResponsiveAppBar() {
 }
 export default ResponsiveAppBar;
 
-// Stephany's first version of the Nav component
+// Great first version from the team: Seneyu
 // const Nav = () => {
 //   return (
 //     <appBar position="static">
