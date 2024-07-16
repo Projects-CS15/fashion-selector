@@ -12,20 +12,21 @@ const theme = createTheme();
 const root = createRoot(document.getElementById('root'));
 
 // flag to enabel or diable dynamic theme switching
-const enableThemeSwitching = false;
+const ENABLE_DYNAMIC_THEMING = false;
 
-function themeApp() { // function to switch themes
+function ThemeApp() { // function to switch themes
   const [currentTheme, setCurrentTheme] = React.useState(lightTheme); // set the current theme to lightTheme by default and create a function to change the theme to the new theme
 
-
-
-root.render(
-  <ThemeProvider theme={theme}>
+return (
+  <ThemeProvider theme={currentTheme}>
     <CssBaseline />
-    <App />
+    <App setTheme={ENABLE_DYNAMIC_THEMING ? setCurrentTheme : null} />
   </ThemeProvider>
-);
+  );
 }
+
+root.render(<ThemeApp />);
+
 
  // // index.js
 

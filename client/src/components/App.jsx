@@ -12,13 +12,13 @@ import InputForm from './InputForm';
 
 console.log('App.jsx is running');
 
-function App() {
+function App( { setTheme } ) { // App component with setTheme prop to set the theme of the app to light or dark theme based on the user's preference or the default theme set in the themes.js file in the themes folder of the client/src directory
   return (
     <Router>
       {/* <h1>App.jsx is running</h1> */}
       <Nav />
       <Routes>
-        <Route path="/" element={<Search />} />
+        <Route path="/" element={<Search setTheme={setTheme} />} /> // Route to the Search component with the setTheme prop to set the theme of the app to light or dark theme based on the user's preference or the default theme set in the themes.js file in the themes folder of the client/src directory when the user is on the home page
         {/* <Route path="/images" element={<ShowImages />} /> */}
         {/* <Route path="/store" element={<StoreListings />} /> */}
         <Route path="/login" element={<Login />} />
