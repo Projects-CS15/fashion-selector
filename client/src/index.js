@@ -10,12 +10,22 @@ import { createRoot } from 'react-dom/client';
 const theme = createTheme();
 
 const root = createRoot(document.getElementById('root'));
+
+// flag to enabel or diable dynamic theme switching
+const enableThemeSwitching = false;
+
+function themeApp() { // function to switch themes
+  const [currentTheme, setCurrentTheme] = React.useState(lightTheme); // set the current theme to lightTheme by default and create a function to change the theme to the new theme
+
+
+
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <App />
   </ThemeProvider>
 );
+}
 
  // // index.js
 
