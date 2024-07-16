@@ -24,7 +24,7 @@ function App( { setTheme } ) { // App component with setTheme prop to set the th
         <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
-  );
+  );// we passed the setTheme prop to the Search component so that the theme of the app can be set based on user input, Dalle3 api response, bing api response, another
 }
 
 export default App; // export App component to be used in index.js

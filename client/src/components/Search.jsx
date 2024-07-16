@@ -1,17 +1,21 @@
 // Search.jsx
 
 import React, { useState } from 'react';
+import { createTheme } from '@mui/material/styles'; // import create from @mui/material/styles to create a new theme 
+import { Typography, Button, Box } from '@mui/material'; // import Typography, Button, and Box from @mui/material to use in the Search component so that the user can see the generated image and click Yes or No 
 import { useNavigate } from 'react-router-dom'; // useNavigate is a hook that returns a navigate function to navigate to a different route
 import InputForm from './InputForm';
 import ShowImages from './ShowImages';
+import { create } from '@mui/material/styles/createTransitions';
+import { from } from 'form-data';
 
-function Search() {
-  const [currentImageUrl, setCurrentImageUrl] = useState(null);
-  const [currentPrompt, setCurrentPrompt] = useState('');
-  const [bingData, setBingData] = useState('');
-  const navigate = useNavigate();
+function Search({ setTheme }) {
+  const [currentImageUrl, setCurrentImageUrl] = useState(null); // currentImageUrl state to store the current image url
+  const [currentPrompt, setCurrentPrompt] = useState(''); // currentPrompt state to store the current prompt
+  const [bingData, setBingData] = useState(''); // bingData state to store the bing data
+  const navigate = useNavigate(); // navigate function to navigate to a different route
 
-  const handleImageGenerated = (imageUrl, prompt) => {
+  const handleImageGenerated = async (imageUrl, prompt) => { // async so that we can use await inside the function
     setCurrentImageUrl(imageUrl);
     setCurrentPrompt(prompt);
   };
@@ -29,6 +33,17 @@ function Search() {
 
       const data = await response.json();
       handleImageGenerated(data.image_url, currentPrompt); // handleImageGenerated is a function that sets the currentImageUrl state
+
+      if(setTheme) {
+        const newTheme = createTheme({
+          palette : {
+            mode: prompt.style.toLowerCase().includes('dark') ? 'dark' : 'light',
+            primary: { main: getColorFromPrompt(prompt.color) },
+          },
+        });
+        setTheme(newTheme);
+      }
+
     } catch (error) {
       console.error('Error:', error);
     }
@@ -80,6 +95,11 @@ function Search() {
       )}
       {/* {bingData && <ShowImages bingData={bingData} />} */}
     </div>
+    return (
+      <box className="search-page pages" sx={{ p: 3 }}>
+        Typography variant="h4" gutterBottom>Discover Your Style!</Typography>
+        <InputForm onImageGenerated={handleImageGenerated} />
+           
   );
 }
 
