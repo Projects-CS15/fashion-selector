@@ -5,8 +5,8 @@ dotenv.config();
 // console.log(dotenv.config())
 // console.log(process)
 
-const endpoint = 'https://api.bing.microsoft.com/v7.0/images/visualsearch';
-const endpoint_openai = 'https://api.openai.com/v1/images/generations';
+const endpoint = process.env.BING_ENDPOINT;
+const endpoint_openai = process.env.OPENAI_ENDPOINT;
 // console.log('can you read this',process.env);
 const subscriptionKey = process.env.SUBSCRIPTION_KEY;
 const openai_key = process.env.OPENAI_API_KEY;
