@@ -1,7 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import { createClient } from '@supabase/supabase-js'
-const supabase = createClient('https://elxaevmbzspqutbydiaj.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVseGFldm1ienNwcXV0YnlkaWFqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjA4OTA0NTMsImV4cCI6MjAzNjQ2NjQ1M30.bWV3TfnCtUpgXP6_fVhDBCjoZwbMTKKx0Rar_uPmSBo')
+const supabase = createClient(process.env.SUPBASE_URL, process.env.SUPABASE_URL)
 
 const dbController = {}
 
