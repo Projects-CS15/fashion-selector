@@ -1,5 +1,5 @@
-const fashionAdvisorController = {};
 const dotenv = require('dotenv');
+const fashionAdvisorController = {};
 
 dotenv.config();
 // console.log(dotenv.config())

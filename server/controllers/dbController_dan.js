@@ -1,3 +1,4 @@
+require('dotenv').config();
 import './App.css';
 import {useState, useEffect} from 'react'
 import { createClient } from '@supabase/supabase-js'
