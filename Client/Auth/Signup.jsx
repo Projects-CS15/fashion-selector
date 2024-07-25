@@ -11,11 +11,11 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(`event ${e} happened - try to sign up with email ${email}`);
     try {
       const response = await axios.post('/api/signup', { email, password, firstName, lastName });
       alert('Signup successful');
       console.log(response.data);
-      history.push('/dashboard');
     } catch (error) {
       alert('Signup failed');
       console.error('AxiosError:', error); // Add logging

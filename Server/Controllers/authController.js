@@ -1,9 +1,12 @@
 const supabase = require('../supabase');
 
+const authController = {};
+
 // Signup
-exports.signup = async (req, res) => {
+authController.signup = async (req, res) => {
   console.log('Signup request received'); // Add logging
   const { email, password } = req.body;
+  console.log('Signup details:', { email, password });
 
   try {
     const { user, session, error } = await supabase.auth.signUp({
@@ -25,9 +28,10 @@ exports.signup = async (req, res) => {
 };
 
 // Login
-exports.login = async (req, res) => {
+authController.login = async (req, res) => {
   console.log('Login request received'); // Add logging
   const { email, password } = req.body;
+  console.log('Login details:', { email, password });
 
   try {
     const { user, session, error } = await supabase.auth.signIn({
@@ -47,3 +51,5 @@ exports.login = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+module.exports = authController;

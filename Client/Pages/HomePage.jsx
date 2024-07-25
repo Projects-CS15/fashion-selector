@@ -13,7 +13,6 @@ const Home = () => {
 
   return (
     <div style={{ backgroundColor: 'transparent', margin: '15px' }}>
-      <ResponsiveAppBar />
       <div
         style={{
           backgroundColor: 'transparent',
