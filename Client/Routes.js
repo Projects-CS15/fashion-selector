@@ -13,7 +13,7 @@ const Routes = () => {
       <ResponsiveAppBar />
       <LoginStatus />
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={Login} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/search" component={ImageSearch} />

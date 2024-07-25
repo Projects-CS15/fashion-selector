@@ -16,7 +16,7 @@ const Login = () => {
       alert('Login successful');
       console.log(response.data);
       login(email); // Update the AuthContext with the logged-in user's email
-      history.push('/dashboard');
+      // history.push('/dashboard');
     } catch (error) {
       alert('Login failed');
       console.error('AxiosError:', error); // Add logging
