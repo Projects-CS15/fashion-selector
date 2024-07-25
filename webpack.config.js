@@ -2,13 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
-const Dotenv = require('dotenv-webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-require('dotenv').config();
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
-  entry: './client/src/index.js',
+  entry: './Client/index.js',
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -60,8 +59,6 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
     static: {
-      //   publicPath: '/dist',
-      // directory: path.resolve(__dirname, 'dist'),
       directory: path.resolve(__dirname, 'client/public'), // ensure access to static files in the public directory
     },
     proxy: [
