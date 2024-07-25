@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Paper, Button, Typography } from '@mui/material';
-import ResponsiveAppBar from '../components/NavBar'; // Adjust the path as needed
+import ResponsiveAppBar from '../components/ResponsiveAppBar'; // Adjust the path as needed
 import './HomePage.css'; // Ensure to retain or update any relevant styles
 
 const Home = () => {

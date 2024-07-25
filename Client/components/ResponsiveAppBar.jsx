@@ -43,13 +43,10 @@ function ResponsiveAppBar() {
         history.push('/login');
         break;
       case 'Sign Up':
-        history.push('/signUp');
+        history.push('/signup');
         break;
       case 'About':
         history.push('/about');
-        break;
-      case 'My Closet':
-        history.push('/myCloset');
         break;
       default:
         console.log('Unknown page:', page);
