@@ -9,7 +9,7 @@ const openai_key = process.env.OPENAI_API_KEY;
 const openaiImageController = {};
 
 openaiImageController.ImgGenService = async (req, res, next) => {
-  const { item, color, style, features } = req.body;
+  const { item, color, style, features, additional } = req.body;
 
   if (!item || !color || !style || !features) {
     return res
@@ -18,10 +18,18 @@ openaiImageController.ImgGenService = async (req, res, next) => {
   }
 
   try {
-    const prompt = `Create an image of a ${style} ${item} in ${color} , 
-    featuring ${features}. The image should have a white background 
-    and the item should be facing the front. 
-    The item should be 100% within the image border.`;
+    let prompt;
+    if (!additional) {
+      prompt = `Create an image of a ${style} ${item} in ${color} , 
+        featuring ${features}. The image should have a white background 
+        and the item should be facing the front. 
+        The item should be 100% within the image border.`;
+      } else {
+        prompt = `Create an image of a ${style} ${item} in ${color} , 
+        featuring ${features}. ${additional}.  The image should have a white background 
+        and the item should be facing the front. 
+        The item should be 100% within the image border.`;
+      };
 
     const response = await axios.post(
       endpoint_openai,

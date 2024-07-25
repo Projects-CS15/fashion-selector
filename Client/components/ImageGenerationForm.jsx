@@ -6,14 +6,16 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');
   const [features, setFeatures] = useState('');
+  const [additional, setAdditional] = useState('');
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCurrentImageUrl(null);
 
     try {
-      const response = await axios.post('/api/generate-image', { item, color, style, features });
-      onImageGenerated(response.data.image_url, { item, color, style, features });
+      const response = await axios.post('/api/generate-image', { item, color, style, features, additional });
+      onImageGenerated(response.data.image_url, { item, color, style, features, additional });
     } catch (error) {
       console.error('Error generating image:', error);
     }
@@ -22,7 +24,7 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Item:
+        Item
         <input
           type="text"
           value={item}
@@ -31,7 +33,7 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
       </label>
       <br />
       <label>
-        Color:
+        Color
         <input
           type="text"
           value={color}
@@ -40,7 +42,7 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
       </label>
       <br />
       <label>
-        Style:
+        Style
         <input
           type="text"
           value={style}
@@ -49,11 +51,20 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
       </label>
       <br />
       <label>
-        Features:
+        Features
         <input
           type="text"
           value={features}
           onChange={(e) => setFeatures(e.target.value)}
+        />
+      </label>
+      <br />
+      <label>
+        Additional info
+        <input
+          type="text"
+          value={additional}
+          onChange={(e) => setAdditional(e.target.value)}
         />
       </label>
       <br />
