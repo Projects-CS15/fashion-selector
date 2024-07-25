@@ -34,7 +34,7 @@ authController.login = async (req, res) => {
   console.log('Login details:', { email, password });
 
   try {
-    const { user, session, error } = await supabase.auth.signIn({
+    const { user, session, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
