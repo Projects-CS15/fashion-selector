@@ -42,7 +42,7 @@ function ImageSearch() {
     setBingData('');
     setLoadingBing(true);
     try {
-      const response = await axios.post('/api/search-bing', {
+      const response = await axios.post('/api/match-service', {
         imageUrl: currentImageUrl,
       });
       setBingData(response.data);
