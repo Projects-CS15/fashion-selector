@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import SpeechRecognition from './SpeechRecognition';
 
 function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
   const [item, setItem] = useState('');
@@ -23,6 +24,7 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
 
   return (
     <form onSubmit={handleSubmit}>
+
       <label>
         Item
         <input
@@ -30,8 +32,14 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={item}
           onChange={(e) => setItem(e.target.value)}
         />
+      <SpeechRecognition
+        key='item'
+        formId='item'
+        setter={setItem}
+      ></SpeechRecognition>
       </label>
       <br />
+
       <label>
         Color
         <input
@@ -39,8 +47,14 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
+        <SpeechRecognition
+        key='color'
+        formId='color'
+        setter={setColor}
+      ></SpeechRecognition>
       </label>
       <br />
+
       <label>
         Style
         <input
@@ -48,8 +62,14 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={style}
           onChange={(e) => setStyle(e.target.value)}
         />
+        <SpeechRecognition
+        key='style'
+        formId='style'
+        setter={setStyle}
+      ></SpeechRecognition>
       </label>
       <br />
+
       <label>
         Features
         <input
@@ -57,8 +77,14 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={features}
           onChange={(e) => setFeatures(e.target.value)}
         />
+        <SpeechRecognition
+        key='features'
+        formId='features'
+        setter={setFeatures}
+      ></SpeechRecognition>
       </label>
       <br />
+
       <label>
         Additional info
         <input
@@ -66,8 +92,14 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={additional}
           onChange={(e) => setAdditional(e.target.value)}
         />
+        <SpeechRecognition
+        key='additional'
+        formId='additional'
+        setter={setAdditional}
+      ></SpeechRecognition>
       </label>
       <br />
+
       <button type="submit">Generate Image</button>
     </form>
   );
