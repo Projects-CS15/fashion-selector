@@ -9,7 +9,7 @@ const HomePage = () => {
   const navigateToSignup = () => {
     history.push('/signup');
   };
-
+ 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
         <Login />
