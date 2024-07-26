@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
-function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
+function ImageGenerationForm({ onImageGenerated, setLoading, setCurrentImageUrl }) {
   const [item, setItem] = useState('');
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');
@@ -10,12 +11,15 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCurrentImageUrl(null);
+    setLoading(true);
 
     try {
       const response = await axios.post('/api/generate-image', { item, color, style, features });
       onImageGenerated(response.data.image_url, { item, color, style, features });
     } catch (error) {
       console.error('Error generating image:', error);
+    } finally {
+      setLoading(false);
     }
   };
 

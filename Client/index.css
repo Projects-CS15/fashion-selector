@@ -12,7 +12,9 @@ body {
   align-items: center;
   background-color: #333;
   padding: 10px 20px;
-  position: fixed; /* Fixed position so nav bar stays @ top of pag */
+  position: fixed; /* Fixed position so nav bar stays @ top of page */
+  width: 100%;
+  z-index: 1000;
 }
 
 .navbar-brand {
@@ -32,53 +34,6 @@ body {
 .navbar-buttons .nav-button:hover {
   background-color: #555;
 }
-
-.auth-form {
-  max-width: 400px; /* Increase the max-width if needed */
-  width: 100%;
-  margin: 50px auto;
-  padding: 40px; /* Adjust padding as needed */
-  background-color: #999999;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  color: #f0f0f0;
-}
-
-.auth-form h2 {
-  margin-bottom: 20px;
-}
-
-.auth-form form {
-  display: flex;
-  flex-direction: column;
-}
-
-.auth-form label {
-  margin-bottom: 5px;
-}
-
-.auth-form input {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #666;
-  border-radius: 5px;
-  background-color: #333;
-  color: #f0f0f0;
-}
-
-.auth-form button {
-  padding: 10px 20px;
-  background-color: #444;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.auth-form button:hover {
-  background-color: #555;
-}
-
 
 .homepage {
   text-align: center;

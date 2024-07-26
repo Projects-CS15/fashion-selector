@@ -67,6 +67,7 @@ function ImageSearch() {
         <h1>Discover Your Style</h1>
         <ImageGenerationForm
           onImageGenerated={handleImageGenerated}
+          setLoading={setLoading} // Pass setLoading to the form
           setCurrentImageUrl={setCurrentImageUrl}
         />
         <br />
