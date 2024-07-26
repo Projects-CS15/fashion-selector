@@ -11,7 +11,7 @@ const AuthNavigationButton = ({ navigateTo, label }) => {
 
   return (
     <Button variant="contained" color="primary" onClick={handleClick} style={{ marginTop: '20px' }}>
-      {label}
+      {label}n
     </Button>
   );
 };

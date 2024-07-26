@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup';
 import LoginStatus from './Auth/LoginStatus';
-import ImageSearch from './components/ImageSearch';
+import ImageSearch from './components/StyleImageSearchPage';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import HomePage from './Pages/HomePage';
 import About from './Pages/About';
@@ -19,6 +19,7 @@ const Routes = () => {
         <Route path="/signup" component={Signup} />
         <Route path="/search" component={ImageSearch} />
         <Route path="/about" component={About} />
+        <Route path="/myAccount" component={About} />
       </Switch>
     </Router>
   );

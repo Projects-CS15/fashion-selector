@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory, useLocation } from 'react-router-dom';
+// import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+
 import { Typography } from '@mui/material';
 import { useAuth } from './AuthContext';
 import AuthNavigationButton from '../components/AuthNavigationButton'; // Adjust the path as needed
@@ -10,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
-  const location = useLocation();
+  // const location = useLocation();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {

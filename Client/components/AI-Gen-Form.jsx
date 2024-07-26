@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import CircularProgress from '@mui/material/CircularProgress';
+import SpeechRecognition from './SpeechRecognition';
 
-function ImageGenerationForm({ onImageGenerated, setLoading, setCurrentImageUrl }) {
+function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl }) {
   const [item, setItem] = useState('');
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');
   const [features, setFeatures] = useState('');
+  const [additional, setAdditional] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,8 +15,8 @@ function ImageGenerationForm({ onImageGenerated, setLoading, setCurrentImageUrl 
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/generate-image', { item, color, style, features });
-      onImageGenerated(response.data.image_url, { item, color, style, features });
+      const response = await axios.post('/api/generate-image', { item, color, style, features, additional });
+      onImageGenerated(response.data.image_url, { item, color, style, features, additional });
     } catch (error) {
       console.error('Error generating image:', error);
     } finally {
@@ -24,46 +25,60 @@ function ImageGenerationForm({ onImageGenerated, setLoading, setCurrentImageUrl 
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="form-container">
       <label>
-        Item:
+        Item
         <input
           type="text"
           value={item}
           onChange={(e) => setItem(e.target.value)}
         />
+        <SpeechRecognition key="item" formId="item" setter={setItem} />
       </label>
-      <br />
+
       <label>
-        Color:
+        Color
         <input
           type="text"
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
+        <SpeechRecognition key="color" formId="color" setter={setColor} />
       </label>
-      <br />
+
       <label>
-        Style:
+        Style
         <input
           type="text"
           value={style}
           onChange={(e) => setStyle(e.target.value)}
         />
+        <SpeechRecognition key="style" formId="style" setter={setStyle} />
       </label>
-      <br />
+
       <label>
-        Features:
+        Features
         <input
           type="text"
           value={features}
           onChange={(e) => setFeatures(e.target.value)}
         />
+        <SpeechRecognition key="features" formId="features" setter={setFeatures} />
       </label>
-      <br />
+
+      <label>
+        Additional info
+        <input
+          type="text"
+          value={additional}
+          onChange={(e) => setAdditional(e.target.value)}
+        />
+        <SpeechRecognition key="additional" formId="additional" setter={setAdditional} />
+      </label>
+
       <button type="submit">Generate Image</button>
     </form>
   );
 }
 
-export default ImageGenerationForm;
+export default AIGenForm;

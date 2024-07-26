@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import ImageGenerationForm from './ImageGenerationForm';
+import ImageGenerationForm from './AI-Gen-Form';
 import ImageResults from './ImageResults';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
