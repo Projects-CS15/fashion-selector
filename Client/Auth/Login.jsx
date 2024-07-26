@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from './AuthContext';
+import { Button, Typography } from '@mui/material';
+import '../styles/AuthForm.css'; 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -23,9 +25,13 @@ const Login = () => {
     }
   };
 
+  const navigateToSignup = () => {
+    history.push('/signup');
+  };
+
   return (
     <div className="auth-form">
-      <h2>Login</h2>
+      <Typography variant="h4" style={{ marginBottom: '1rem' }}>Login</Typography>
       <form onSubmit={handleSubmit}>
         <label>Email:</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -33,6 +39,7 @@ const Login = () => {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         <button type="submit">Login</button>
       </form>
+
     </div>
   );
 };

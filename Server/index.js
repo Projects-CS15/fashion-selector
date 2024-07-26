@@ -10,8 +10,8 @@ const bingSearchController = require('./Controllers/bingSearchController');
 
 dotenv.config();
 
-console.log('Supabase URL:', process.env.SUPABASE_URL); // Add logging
-console.log('Supabase Key:', process.env.SUPABASE_KEY); // Add logging
+console.log('Supabase URL:', process.env.SUPABASE_URL); 
+console.log('Supabase Key:', process.env.SUPABASE_KEY); 
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
