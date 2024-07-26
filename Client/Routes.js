@@ -6,6 +6,7 @@ import Signup from './Auth/Signup';
 import LoginStatus from './Auth/LoginStatus';
 import ImageSearch from './components/ImageSearch';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
+import AboutPage from './components/About';
 
 const Routes = () => {
   return (
@@ -13,7 +14,7 @@ const Routes = () => {
       <ResponsiveAppBar />
       <LoginStatus />
       <Switch>
-        <Route exact path="/" component={Login} />
+        <Route exact path="/about" component={AboutPage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/search" component={ImageSearch} />
