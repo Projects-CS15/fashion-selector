@@ -169,3 +169,11 @@ button {
 .image-results::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* Adding centering for the the CircularProgress component */
+.center-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem; 
+}

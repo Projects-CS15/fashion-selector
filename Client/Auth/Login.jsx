@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import { useHistory, useLocation } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-
-import { Typography } from '@mui/material';
+import { Typography, CircularProgress, Snackbar, Alert } from '@mui/material';
 import { useAuth } from './AuthContext';
-import AuthNavigationButton from '../components/AuthNavigationButton'; // Adjust the path as needed
+import AuthNavigationButton from '../components/AuthNavigationButton';
 import '../styles/AuthForm.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: '' });
   const history = useHistory();
-  // const location = useLocation();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post('/api/login', { email, password });
-      alert('Login successful');
-      console.log(response.data);
-      login(email); // Update the AuthContext with the logged-in user's email
-      history.push('/search');
+      const { user, session } = response.data;
+      login(user, session);
+      setSnackbar({ open: true, message: 'Login successful', severity: 'success' });
+      setTimeout(() => {
+        history.push('/search');
+      }, 1200); 
     } catch (error) {
-      alert('Login failed');
-      console.error('AxiosError:', error); // Add logging
+      setSnackbar({ open: true, message: 'Login failed', severity: 'error' });
+      console.error('AxiosError:', error);
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -38,12 +46,25 @@ const Login = () => {
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <label>Password:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>Login</button>
         </form>
+        {loading && (
+          <div className="center-loading">
+            <CircularProgress />
+          </div>
+        )}
       </div>
-      {
-        <AuthNavigationButton navigateTo="/signup" label="Don't have an account? Sign-Up" />
-      }
+      <AuthNavigationButton navigateTo="/signup" label="Don't have an account? Sign-Up" />
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Center the Snackbar at the top
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

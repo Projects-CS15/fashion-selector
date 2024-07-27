@@ -7,6 +7,7 @@ import ImageSearch from './components/StyleImageSearchPage';
 import ResponsiveAppBar from './components/ResponsiveAppBar';
 import HomePage from './Pages/HomePage';
 import About from './Pages/About';
+import MyAccount from './Pages/MyAccount';
 
 const Routes = () => {
   return (
@@ -19,7 +20,7 @@ const Routes = () => {
         <Route path="/signup" component={Signup} />
         <Route path="/search" component={ImageSearch} />
         <Route path="/about" component={About} />
-        <Route path="/myAccount" component={About} />
+        <Route path="/myAccount" component={MyAccount} />
       </Switch>
     </Router>
   );
