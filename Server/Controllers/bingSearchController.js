@@ -46,7 +46,10 @@ bingSearchController.matchService = async (req, res, next) => {
           item.hostPageUrl.toLowerCase().includes('shop')
       );
 
-    res.json(simplifiedData);
+    // Limit the number of results
+    const limitedResults = simplifiedData.slice(0, 15); // Change 15 to the desired number of results
+
+    res.json(limitedResults);
   } catch (error) {
     console.error('Visual Search Error:', error);
     res.status(500).json({ error: 'An error occurred on Visual Search.' });
