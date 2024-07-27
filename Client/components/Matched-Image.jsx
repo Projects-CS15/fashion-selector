@@ -29,6 +29,7 @@ function ImageSearch() {
         color: currentPrompt.color,
         style: currentPrompt.style,
         features: currentPrompt.features,
+        additional: currentPrompt.additional
       });
       handleImageGenerated(response.data.image_url, currentPrompt);
     } catch (error) {
