@@ -13,18 +13,22 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useAuth } from '../Auth/AuthContext';
 
-const pages = ['Login', 'Sign Up', 'About', 'Home', 'Search'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pagesLoggedOut = ['Login', 'Sign Up', 'About'];
+const pagesLoggedIn = ['Search', 'Feed', 'Favorites'];
+const settings = ['My Account', 'Logout'];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const history = useHistory();
+  const { user, avatarUrl, logout } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -38,6 +42,12 @@ function ResponsiveAppBar() {
         break;
       case 'Search':
         history.push('/search');
+        break;
+      case 'Feed':
+        history.push('/feed');
+        break;
+      case 'Favorites':
+        history.push('/favorites');
         break;
       case 'Login':
         history.push('/login');
@@ -57,8 +67,34 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const handleMyAccount = () => {
+    handleCloseUserMenu();
+    history.push('/myAccount');
+  };
+
+  const handleLogout = () => {
+    logout();
+    handleCloseUserMenu();
+    history.push('/');
+  };
+
+  const handleUserMenuClick = (setting) => {
+    switch (setting) {
+      case 'Logout':
+        handleLogout();
+        break;
+      case 'My Account':
+        handleMyAccount();
+        break;
+      default:
+        handleCloseUserMenu();
+    }
+  };
+
+  const pages = user ? pagesLoggedIn : pagesLoggedOut;
+
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#333' }}>
+    <AppBar position="fixed" sx={{ backgroundColor: '#333' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -85,7 +121,7 @@ function ResponsiveAppBar() {
                 horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => handleCloseNavMenu(null)}
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
@@ -127,36 +163,41 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="https://www.iconsdb.com/icons/preview/gray/circle-xxl.png" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          {user && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  {avatarUrl ? (
+                    <Avatar alt={user?.user_metadata?.first_name} src={avatarUrl} />
+                  ) : (
+                    <Avatar>{user?.user_metadata?.first_name?.charAt(0).toUpperCase()}</Avatar>
+                  )}
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => handleUserMenuClick(setting)}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

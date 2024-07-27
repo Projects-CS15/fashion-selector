@@ -2,29 +2,30 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import SpeechRecognition from './SpeechRecognition';
 
-function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
+function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl }) {
   const [item, setItem] = useState('');
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');
   const [features, setFeatures] = useState('');
   const [additional, setAdditional] = useState('');
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCurrentImageUrl(null);
+    setLoading(true);
 
     try {
       const response = await axios.post('/api/generate-image', { item, color, style, features, additional });
       onImageGenerated(response.data.image_url, { item, color, style, features, additional });
     } catch (error) {
       console.error('Error generating image:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-
+    <form onSubmit={handleSubmit} className="form-container">
       <label>
         Item
         <input
@@ -32,13 +33,8 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={item}
           onChange={(e) => setItem(e.target.value)}
         />
-      <SpeechRecognition
-        key='item'
-        formId='item'
-        setter={setItem}
-      ></SpeechRecognition>
+        <SpeechRecognition key="item" formId="item" setter={setItem} />
       </label>
-      <br />
 
       <label>
         Color
@@ -47,13 +43,8 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
-        <SpeechRecognition
-        key='color'
-        formId='color'
-        setter={setColor}
-      ></SpeechRecognition>
+        <SpeechRecognition key="color" formId="color" setter={setColor} />
       </label>
-      <br />
 
       <label>
         Style
@@ -62,13 +53,8 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={style}
           onChange={(e) => setStyle(e.target.value)}
         />
-        <SpeechRecognition
-        key='style'
-        formId='style'
-        setter={setStyle}
-      ></SpeechRecognition>
+        <SpeechRecognition key="style" formId="style" setter={setStyle} />
       </label>
-      <br />
 
       <label>
         Features
@@ -77,13 +63,8 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={features}
           onChange={(e) => setFeatures(e.target.value)}
         />
-        <SpeechRecognition
-        key='features'
-        formId='features'
-        setter={setFeatures}
-      ></SpeechRecognition>
+        <SpeechRecognition key="features" formId="features" setter={setFeatures} />
       </label>
-      <br />
 
       <label>
         Additional info
@@ -92,17 +73,12 @@ function ImageGenerationForm({ onImageGenerated, setCurrentImageUrl }) {
           value={additional}
           onChange={(e) => setAdditional(e.target.value)}
         />
-        <SpeechRecognition
-        key='additional'
-        formId='additional'
-        setter={setAdditional}
-      ></SpeechRecognition>
+        <SpeechRecognition key="additional" formId="additional" setter={setAdditional} />
       </label>
-      <br />
 
       <button type="submit">Generate Image</button>
     </form>
   );
 }
 
-export default ImageGenerationForm;
+export default AIGenForm;
