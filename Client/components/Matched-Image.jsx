@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import ImageGenerationForm from './ImageGenerationForm';
+import ImageGenerationForm from './AI-Gen-Form';
 import ImageResults from './ImageResults';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -68,6 +68,7 @@ function ImageSearch() {
         <h1>Discover Your Style</h1>
         <ImageGenerationForm
           onImageGenerated={handleImageGenerated}
+          setLoading={setLoading} // Pass setLoading to the form
           setCurrentImageUrl={setCurrentImageUrl}
         />
         <br />
