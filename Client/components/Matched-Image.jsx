@@ -56,7 +56,7 @@ function ImageSearch() {
 
   return (
     <div
-      className="search-page pages"
+      className="search-page"
       style={{
         display: 'flex',
         justifyContent: 'space-around',
