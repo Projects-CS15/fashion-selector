@@ -1,7 +1,22 @@
+
+/**
+ * Imports
+ * @express routing middleware framework for server-side Node.js
+ * @cors middleware to allow app to access the resources not hosted on our server -- however
+ * we are using webpack proxy for all requests made to /api to this server and all outbound client
+ * requests are proceeded by /api
+ * 
+ */
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const multer = require('multer');
+/**
+ * @v4 importing v4 function from uuid library under nickname x
+ * uuidd. The v4 methods generaters a random uuid which we then
+ * use to generate unique file names so that we can avoid 
+ * file name collisions during DB insertions. 
+ */
 const { v4: uuidv4 } = require('uuid');
 
 const app = express();
@@ -22,7 +37,16 @@ app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
 
-// AUTHENTICATION
+
+//ACCOUNT MANAGEMENT
+/**
+ * upload.single is part of mutter middleware library and
+ * is a method is w/ with the name of the file input field in the
+ * HTML form it came from as an arg. Then, it processes 
+ * the incoming file upload and make the file avail
+ * in the req.file object (like express but for binary data with 
+ * the content-typoe 'multipart/form-data'
+ */
 app.post('/api/signup', authController.signup);
 app.post('/api/login', authController.login);
 

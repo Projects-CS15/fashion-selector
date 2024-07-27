@@ -6,7 +6,14 @@ import { useAuth } from './AuthContext';
 import AuthNavigationButton from '../components/AuthNavigationButton';
 import '../styles/AuthForm.css';
 
+/**
+ * User-side functionality for existing user at login and route path
+ * @returns 
+ */
 const Login = () => {
+  /**
+   * local state for email, password, loading
+   */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);

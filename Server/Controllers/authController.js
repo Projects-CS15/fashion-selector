@@ -2,7 +2,6 @@ const supabase = require('../supabase');
 
 const authController = {};
 
-// Signup
 authController.signup = async (req, res) => {
   console.log('Signup request received');
   const { email, password, firstName, lastName } = req.body;
