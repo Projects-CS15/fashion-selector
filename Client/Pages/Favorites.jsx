@@ -1,93 +1,104 @@
 import React from 'react';
 import styled from 'styled-components';
 
-// page container
-
+// Page container
 const PageContainer = styled.div`
-
-    max-width: 1025px;
-    padding: 20px;
-    margin-top: 100px;
-
+  max-width: 1025px;
+  padding: 50px;
+  margin-top: 50px;
 `;
 
-// favorites container 
-const FavoritesContainer = styled.div`
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: space-around;
-    height: 200px;
-    width: 1000px;
-    padding: 10px;
-    margin: 0 auto;
-
+// Container for each favorites row
+const FavoritesRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: space-around;
+  width: 100%;
+  padding: 10px;
+  margin: 70px 0; 
 `;
 
-// image container
+// AI Image container
 const ImageContainer = styled.div`
-
-    height: 200px;
-    width: 400px;
-    border-style: solid;
-
+  height: 200px;
+  width: 400px;
+  border-style: solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-// cards sidebar 
-const CardContainer = styled.aside`
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-left: 100px;
-    height: 200px;
-    width: 600px;
-
+// AI image placeholder
+const Placeholder = styled.div`
+  width: 90%;
+  height: 90%;
+  background: #f0f0f0;
 `;
 
+// Cards container
+const CardContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 600px;  
+`;
+
+// Single card container
 const Card = styled.div`
-    
-    height: 200px;
-    width: 200px;
-    background-color: #D9D9D9;
-    border-style: solid;
-    border-radius: 2rem;
-
+  height: 165px;
+  width: 165px;
+  background-color: #f0f0f0;
+  margin: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-style: solid;
+  border-radius: 2rem;
 `;
 
-
+// Card image
 const Image = styled.img`
+  height: 100px;
+  width: 100px;
+  position: relative;
+`;
 
-    height: 30px;
-    width: 30px;
+// Label div container
+const Label = styled.div`
+  margin-top: 15px;
+  text-align: center;
+`;
 
+// Actual label styling
+const RetailerLabel = styled(Label)`
+  color: #333;
+  font-weight: bold;
 `;
 
 
+// Favorites component
 const Favorites = () => {
-
-
     return (
-        <div>
-
-            <PageContainer>
-                <FavoritesContainer>
-                    <ImageContainer />
+        <PageContainer>
+            {[...Array(3)].map((_, rowIndex) => (
+                <FavoritesRow key={rowIndex}>
+                    <ImageContainer>
+                        <Placeholder src="https://via.placeholder.com/400x200" />
+                    </ImageContainer>
                     <CardContainer>
-                        <Card><Image /></Card>
-                        <Card><Image /></Card>
-                        <Card><Image /></Card>
+                        {[...Array(3)].map((_, cardIndex) => (
+                            <Card key={cardIndex}>
+                                <Image src="https://via.placeholder.com/30" alt="placeholder" />
+                                <RetailerLabel>Amazon</RetailerLabel>
+                            </Card>
+                        ))}
                     </CardContainer>
-                </FavoritesContainer>
-            </PageContainer>
-
-
-        </div>
-
-
-    )
-
-}
+                </FavoritesRow>
+            ))}
+        </PageContainer>
+    );
+};
 
 export default Favorites;
