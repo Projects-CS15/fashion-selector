@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import AIGenForm from './AI-Gen-Form';
-import AIGenResult from './AI-Gen-Result';
+import AIGenResult from './AI-Gen-Result';;
 import MatchedResults from './Matched-Results';
+import SurpriseMe from './SurpriseMe';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -54,6 +55,19 @@ function StyleImageSearchPage() {
     }
   };
 
+  const handleSurprise = async (randomPrompt) => {
+    setCurrentPrompt(randomPrompt);
+    setCurrentImageUrl(null);
+    setLoading(true);
+    try {
+      const response = await axios.post('/api/generate-image', randomPrompt);
+      handleImageGenerated(response.data.image_url, randomPrompt);
+    } catch (error) {
+      console.error('Error generating new image:', error);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container">
       <div className="form-container">
@@ -62,7 +76,9 @@ function StyleImageSearchPage() {
           onImageGenerated={handleImageGenerated}
           setLoading={setLoading}
           setCurrentImageUrl={setCurrentImageUrl}
+          currentPrompt={currentPrompt}
         />
+        <SurpriseMe onSurprise={handleSurprise} />
         <br />
         {loading && (
           <div style={{ textAlign: 'center' }}>

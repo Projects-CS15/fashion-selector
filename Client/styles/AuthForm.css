@@ -4,16 +4,17 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background-color: #E3F2FD;
 }
 
 .auth-form {
-  max-width: 400px; /* Increase the max-width if needed */
+  max-width: 400px;
   width: 100%;
-  padding: 40px; /* Adjust padding as needed */
-  background-color: #999999;
+  padding: 40px;
+  background-color: #FFFFFF;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  color: #f0f0f0;
+  border-radius: 10px;
+  color: #333;
 }
 
 .auth-form h2 {
@@ -32,15 +33,15 @@
 .auth-form input {
   margin-bottom: 20px;
   padding: 10px;
-  border: 1px solid #666;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  background-color: #333;
-  color: #f0f0f0;
+  background-color: #fff;
+  color: #333;
 }
 
 .auth-form button {
   padding: 10px 20px;
-  background-color: #444;
+  background-color: #1976D2;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -48,5 +49,5 @@
 }
 
 .auth-form button:hover {
-  background-color: #555;
+  background-color: #1565C0;
 }
