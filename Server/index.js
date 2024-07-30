@@ -127,7 +127,10 @@ app.post('/api/match-service', bingSearchController.matchService);
 app.get('/api/user-profile/:userId', profileController.getUserProfile);
 app.post('/api/update-profile', profileController.updateProfile);
 
-
+// Catch-all route to serve index.html for any other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

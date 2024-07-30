@@ -6,9 +6,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
+const isProduction = process.env.NODE_ENV === 'production'; //determine mode based on env variable
+
 module.exports = {
   entry: './Client/index.js',
-  mode: 'development',
+  mode: isProduction ? 'production' : 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -51,10 +53,11 @@ module.exports = {
       inject: true,
     }),
     new Dotenv(),
-  ],
+    !isProduction && new webpack.HotModuleReplacementPlugin(), // HMR only in dev mode
+  ].filter(Boolean),
   optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
+    minimize: isProduction,
+    minimizer: isProduction ? [new TerserPlugin(), new CssMinimizerPlugin()] : [],
   },
   devServer: {
     historyApiFallback: true,
