@@ -11,6 +11,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const multer = require('multer');
+const path = require('path')
 /**
  * @v4 importing v4 function from uuid library under nickname x
  * uuidd. The v4 methods generaters a random uuid which we then
@@ -129,6 +130,7 @@ app.post('/api/update-profile', profileController.updateProfile);
 
 // Catch-all route to serve index.html for any other routes
 app.get('*', (req, res) => {
+  console.log(path.join(__dirname, '../dist/index.html'))
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 app.listen(PORT, () => {
