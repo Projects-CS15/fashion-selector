@@ -3,10 +3,13 @@ import React from 'react';
 function AIGenResult({ imageUrl, onTryAgainClick, onFindMatchingItemsClick }) {
   return (
     <div className="generated-image">
-      <img src={imageUrl} alt="Generated" className="generatedImg" height="300px" />
-      <br />
-      <button onClick={onTryAgainClick}>Try Again</button>
-      <button onClick={onFindMatchingItemsClick}>Find Matching Items</button>
+      <div>
+        <img src={imageUrl} alt="Generated" className="generatedImg"/>
+      </div>
+      <div className="imgBtnContainer">
+        <button onClick={onTryAgainClick}>Generate new image</button>
+        <button onClick={onFindMatchingItemsClick}>Find matching items</button>
+      </div>
     </div>
   );
 }

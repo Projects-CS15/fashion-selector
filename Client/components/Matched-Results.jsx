@@ -9,14 +9,19 @@ function MatchedResults({ bingData }) {
   }, [bingData]);
 
   return (
-    <div className="image-results">
-      <h2>Similar Images</h2>
-      <div>
-        {bingData.map((image, index) => (
-          <MatchedResult key={index} image={image} />
-        ))}
+    <>
+      <h2 className='searchResults'>Search results</h2>
+      <div className="bingContainer">
+        <div className="image-results">
+          {bingData.map((image, index) => (
+            <MatchedResult 
+              key={index}
+              image={image}
+               />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
