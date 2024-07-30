@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Typography, CircularProgress, Snackbar, Alert } from '@mui/material';
 import { useAuth } from './AuthContext';
-import AuthNavigationButton from '../components/AuthNavigationButton';
+import AuthNavigationButton from './AuthNavigationButton';
 import '../styles/AuthForm.css';
 
 const Signup = () => {

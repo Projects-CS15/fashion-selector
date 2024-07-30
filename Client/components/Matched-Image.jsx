@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import ImageGenerationForm from './AI-Gen-Form';
-import ImageResults from './ImageResults';
+import AIGenForm from './AI-Gen-Form';
+import AIGenResult from './AI-Gen-Result';
+import MatchedResults from './Matched-Results';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -20,7 +21,7 @@ function ImageSearch() {
     setLoading(false);
   };
 
-  const handleNoClick = async () => {
+  const handleTryAgainClick = async () => {
     setCurrentImageUrl(null);
     setLoading(true);
     try {
@@ -29,7 +30,6 @@ function ImageSearch() {
         color: currentPrompt.color,
         style: currentPrompt.style,
         features: currentPrompt.features,
-        additional: currentPrompt.additional
       });
       handleImageGenerated(response.data.image_url, currentPrompt);
     } catch (error) {
@@ -39,7 +39,7 @@ function ImageSearch() {
     }
   };
 
-  const handleYesClick = async () => {
+  const handleFindMatchingItemsClick = async () => {
     setBingData('');
     setLoadingBing(true);
     try {
@@ -55,45 +55,40 @@ function ImageSearch() {
   };
 
   return (
-    <div
-      className="search-page pages"
-      style={{
-        display: 'flex',
-        justifyContent: 'space-around',
-        backgroundColor: 'rgba(255, 255, 255, 0.5)',
-        margin: '50px 80px',
-      }}
-    >
-      <div style={{ minWidth: '350px' }}>
+    <div className="container">
+      <div className="form-container">
         <h1>Discover Your Style</h1>
-        <ImageGenerationForm
+        <AIGenForm
           onImageGenerated={handleImageGenerated}
-          setLoading={setLoading} // Pass setLoading to the form
+          setLoading={setLoading}
           setCurrentImageUrl={setCurrentImageUrl}
         />
         <br />
-        {loading && <CircularProgress />}
-        {currentImageUrl && (
-          <div>
-            <img
-              src={currentImageUrl}
-              alt="Generated"
-              className="generatedImg"
-              height="300px"
-            />
-            <br />
-            <button onClick={handleNoClick}>No</button>
-            <button onClick={handleYesClick}>Yes</button>
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <CircularProgress />
+            <p>Finding Your Style...</p>
           </div>
+        )}
+        {currentImageUrl && (
+          <AIGenResult
+            imageUrl={currentImageUrl}
+            onTryAgainClick={handleTryAgainClick}
+            onFindMatchingItemsClick={handleFindMatchingItemsClick}
+          />
         )}
       </div>
       {bingData ? (
-        <ImageResults bingData={bingData} />
+        <MatchedResults bingData={bingData} />
       ) : (
-        <div style={{ width: '500px' }}>
+        <div style={{ width: '500px' }}></div>
+      )}
+      {loadingBing && (
+        <div style={{ textAlign: 'center' }}>
+          <LinearProgress />
+          <p>Finding Matching Items...</p>
         </div>
       )}
-      {loadingBing && <LinearProgress />}
     </div>
   );
 }

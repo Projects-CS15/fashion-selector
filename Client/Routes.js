@@ -8,11 +8,13 @@ import ResponsiveAppBar from './components/ResponsiveAppBar';
 import HomePage from './Pages/HomePage';
 import About from './Pages/About';
 import MyAccount from './Pages/MyAccount';
+import ForYouFeed from './Pages/ForYouFeed';
 
 const Routes = () => {
   return (
     <Router>
       <ResponsiveAppBar />
+    <div className="main-content">
       <LoginStatus />
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -21,7 +23,11 @@ const Routes = () => {
         <Route path="/search" component={ImageSearch} />
         <Route path="/about" component={About} />
         <Route path="/myAccount" component={MyAccount} />
-      </Switch>
+        <Route path="/feed" component={ForYouFeed} />
+        <Route path="/feed" component={ForYouFeed} />
+
+        </Switch>
+              </div>
     </Router>
   );
 };
