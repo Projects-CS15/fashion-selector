@@ -9,6 +9,7 @@ import HomePage from './Pages/HomePage';
 import About from './Pages/About';
 import MyAccount from './Pages/MyAccount';
 import ForYouFeed from './Pages/ForYouFeed';
+import PromptTester from './components/PromptTester';
 
 const Routes = () => {
   return (
@@ -24,8 +25,7 @@ const Routes = () => {
         <Route path="/about" component={About} />
         <Route path="/myAccount" component={MyAccount} />
         <Route path="/feed" component={ForYouFeed} />
-        <Route path="/feed" component={ForYouFeed} />
-
+        <Route path="/prompt-tester" component={PromptTester} />
         </Switch>
               </div>
     </Router>
