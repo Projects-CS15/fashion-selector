@@ -55,8 +55,16 @@ function ImageSearch() {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
+    <div
+      className="search-page"
+      style={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+        margin: '50px 80px',
+      }}
+    >
+      <div style={{ minWidth: '350px' }}>
         <h1>Discover Your Style</h1>
         <AIGenForm
           onImageGenerated={handleImageGenerated}

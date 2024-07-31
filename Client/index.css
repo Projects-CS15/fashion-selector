@@ -1,13 +1,11 @@
 body {
+  height: 100%;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #E3F2FD;
-  color: #333;
-}
-
-.main-content {
-  padding-top: 64px;
+  background-image: linear-gradient(#2D6C8F, #999999);
+  color: #999999;
+  background-attachment: fixed;
 }
 
 .navbar {
@@ -51,17 +49,21 @@ body {
   margin: 20px 0;
 }
 
-.search-page {
-  text-align: center;
-  padding: 100px 20px 20px;
-
-  /* Added top padding to avoid being covered by navbar */
-
+.generatedImg {
+  max-width: 200px;
+  max-height: 200px;
+  height: auto;
+  border-radius: 5px;
 }
 
-.generatedImg {
-  max-width: 100%;
-  height: auto;
+.imgBtnContainer {
+  /* background-color: blue; */
+  display: flex;
+  align-items: flex-end;
+}
+
+.dallEProgress {
+  margin-top: 10px;
 }
 
 .login-status {
@@ -81,102 +83,139 @@ body {
   margin-top: 20px;
 }
 
+.spacer {
+  height: 85px;
+}
+
+.spacerBottom {
+  height: 40px;
+  width: 100%;
+  position: absolute;
+  bottom: 10px;
+}
+
+.containerOuter {
+  display: flex;
+  height: 83vh;
+}
+
 .container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  gap: 20px;
-  padding: 20px;
-  max-width: 1200px;
-  margin: auto;
-  background-color: #FFFFFF;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100vw;
+  display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
   border-radius: 10px;
 }
 
 .form-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  width: 260px;
+  max-height: 400px;
+}
+
+.form-container2 {
+  /* background-color: red; */
+  border-radius: 10px;
+  max-height: 400px;
+}
+
+.rightContainer {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.form-container form {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 10px;
-  width: 100%;
-  max-width: 400px;
+.discover {
+  margin-left: 10px;
+  margin-bottom: 5px;
 }
 
-.form-container label {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.form-container input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.form-container button {
-  grid-column: span 2;
-  padding: 10px 20px;
-  background-color: #1976D2;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.form-container button:hover {
-  background-color: #1565C0;
+.fashion {
+  margin-left: 10px;
+  margin-top: 0px;
+  color: black
 }
 
 .generated-image {
+  display: flex;
   text-align: center;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.bingContainer {
+  flex-grow: 1;
+  display: flex;
+  width: 95%;
+  justify-content: center;
 }
 
 .image-results {
-  max-height: 600px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  max-width: 80vw;
   padding: 10px;
-  border: 1px solid #ddd;
   border-radius: 5px;
-  background-color: #F1F8E9;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
 }
 
 .image-results img {
-  width: 100%;
   height: 100px;
-  object-fit: cover;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-.speechButton {
-  margin-left: 10px;
-  padding: 8px;
-  background-color: #1976D2;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.searchResults {
+  color: white;
+  text-align: left;
 }
 
-.speechButton:hover {
-  background-color: #1565C0;
+.matchedResult {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  margin: 5px 5px 5px 5px;
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: space-between;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.star {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
 }
 
 button {
   margin: 5px;
+  padding: 5px;
+  height: 30px;
+  background-color: #2C2C2C;
+  color: #F5F5F5;
+  border-radius: 5px;
+}
+
+.speechButton {
+  margin-right: 0px;
+  font-size: x-small;
+  height: 22px;
+}
+
+.generateImage {
+  margin-top: 20px;
+  margin-left: 104px
 }
 
 .image-results::-webkit-scrollbar {
@@ -197,13 +236,25 @@ button {
   background: #555;
 }
 
+a:link,
+a:visited {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover,
+a:active {
+  text-decoration: underline;
+  color: #2D6C8F;
+}
+
+
+/* Adding centering for the the CircularProgress component */
 .center-loading {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-
-}
 
 }
 
@@ -234,4 +285,3 @@ button {
   margin-right: 10px;
   font-size: 16px;
 }
-

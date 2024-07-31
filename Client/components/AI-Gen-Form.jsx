@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpeechRecognition from './SpeechRecognition';
 
+<<<<<<< HEAD
 function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPrompt }) {
+=======
+function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, setBingData }) {
+>>>>>>> edded58b2851385e2619f257d93134e9eafe83ff
   const [item, setItem] = useState('');
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');
@@ -22,6 +26,7 @@ function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPr
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCurrentImageUrl(null);
+    setBingData('');
     setLoading(true);
 
     try {
@@ -35,9 +40,13 @@ function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPr
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form-container">
+    <form 
+      onSubmit={handleSubmit} 
+      className="form-container2">
+
       <label>
         Item
+        <br></br>
         <input
           type="text"
           value={item}
@@ -45,9 +54,12 @@ function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPr
         />
         <SpeechRecognition key="item" formId="item" setter={setItem} />
       </label>
+      <br></br>
+      
 
       <label>
         Color
+        <br></br>
         <input
           type="text"
           value={color}
@@ -55,9 +67,12 @@ function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPr
         />
         <SpeechRecognition key="color" formId="color" setter={setColor} />
       </label>
+      <br></br>
+      
 
       <label>
         Style
+        <br></br>
         <input
           type="text"
           value={style}
@@ -65,9 +80,12 @@ function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPr
         />
         <SpeechRecognition key="style" formId="style" setter={setStyle} />
       </label>
+      <br></br>
+      
 
       <label>
         Features
+        <br></br>
         <input
           type="text"
           value={features}
@@ -75,18 +93,23 @@ function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPr
         />
         <SpeechRecognition key="features" formId="features" setter={setFeatures} />
       </label>
+      <br></br>
+      
 
       <label>
         Additional info
+        <br></br>
         <input
           type="text"
           value={additional}
           onChange={(e) => setAdditional(e.target.value)}
         />
         <SpeechRecognition key="additional" formId="additional" setter={setAdditional} />
-      </label>
+      </label> 
+      <br></br>
+      
 
-      <button type="submit">Generate Image</button>
+      <button className="generateImage" type="submit">Generate Image</button>
     </form>
   );
 }

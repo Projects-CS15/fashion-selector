@@ -7,11 +7,17 @@ import MatchedResults from './Matched-Results';
 import SurpriseMe from './SurpriseMe';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
+import { fakeBing, fakeImg } from './__fakeData';
 
 function StyleImageSearchPage() {
-  const [currentImageUrl, setCurrentImageUrl] = useState(null);
   const [currentPrompt, setCurrentPrompt] = useState('');
-  const [bingData, setBingData] = useState('');
+
+  // const [currentImageUrl, setCurrentImageUrl] = useState(null);  // --- dummy DALL-E img below - comment out the below and un-comment this to switch to real data
+  const [currentImageUrl, setCurrentImageUrl] = useState(fakeImg);
+
+  // const [bingData, setBingData] = useState(''); // --- dummy bing data below - comment out the below and un-comment this to switch to real data
+  const [bingData, setBingData] = useState(fakeBing);
+
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [loadingBing, setLoadingBing] = useState(false);
@@ -25,6 +31,7 @@ function StyleImageSearchPage() {
   const handleTryAgainClick = async () => {
     setCurrentImageUrl(null);
     setLoading(true);
+    setBingData('');
     try {
       const response = await axios.post('/api/generate-image', {
         item: currentPrompt.item,
@@ -69,43 +76,52 @@ function StyleImageSearchPage() {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <h1>Discover Your Style</h1>
-        <AIGenForm
-          onImageGenerated={handleImageGenerated}
-          setLoading={setLoading}
-          setCurrentImageUrl={setCurrentImageUrl}
-          currentPrompt={currentPrompt}
-        />
-        <SurpriseMe onSurprise={handleSurprise} />
-        <br />
-        {loading && (
-          <div style={{ textAlign: 'center' }}>
-            <CircularProgress />
-            <p>Finding Your Style...</p>
+    <>
+      <div className="spacer"></div>
+      <div className="containerOuter">
+        <div className="container">
+          <div className="form-container">
+            <p className="discover">Discover your style</ p>
+            <h3 className="fashion">Fashion, Art, Furniture</h3>
+            <hr></hr>
+            <AIGenForm
+              onImageGenerated={handleImageGenerated}
+              setLoading={setLoading}
+              setCurrentImageUrl={setCurrentImageUrl}
+              setBingData={setBingData}
+            />
+            <br />
           </div>
-        )}
-        {currentImageUrl && (
-          <AIGenResult
-            imageUrl={currentImageUrl}
-            onTryAgainClick={handleTryAgainClick}
-            onFindMatchingItemsClick={handleFindMatchingItemsClick}
-          />
-        )}
-      </div>
-      {bingData ? (
-        <MatchedResults bingData={bingData} />
-      ) : (
-        <div style={{ width: '500px' }}></div>
-      )}
-      {loadingBing && (
-        <div style={{ textAlign: 'center' }}>
-          <LinearProgress />
-          <p>Finding Matching Items...</p>
+          <div className="rightContainer">
+            {loading && (
+              <div className="dallEProgress" style={{ textAlign: 'center' }}>
+                <CircularProgress />
+                <p>Finding your style...</p>
+              </div>
+            )}
+            {currentImageUrl && (
+              <AIGenResult
+                imageUrl={currentImageUrl}
+                onTryAgainClick={handleTryAgainClick}
+                onFindMatchingItemsClick={handleFindMatchingItemsClick}
+              />
+            )}
+            {bingData ? (
+              <MatchedResults bingData={bingData} />
+            ) : (
+              <div ></div>
+            )}
+            {loadingBing && (
+              <div style={{ textAlign: 'center' }}>
+                <LinearProgress />
+                <p>Finding Matching Items...</p>
+              </div>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+      <div className="spacerBottom"></div>
+    </>
   );
 }
 
