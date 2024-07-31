@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpeechRecognition from './SpeechRecognition';
 
-<<<<<<< HEAD
-function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPrompt }) {
-=======
-function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, setBingData }) {
->>>>>>> edded58b2851385e2619f257d93134e9eafe83ff
+function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, setBingData, currentPrompt }) {
   const [item, setItem] = useState('');
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');

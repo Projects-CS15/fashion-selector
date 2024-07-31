@@ -28,14 +28,11 @@ const Routes = () => {
         <Route path="/search" component={ImageSearch} />
         <Route path="/about" component={About} />
         <Route path="/myAccount" component={MyAccount} />
-
         <Route path="/favorites" component={Favorites} />
-      </Switch>
-
         <Route path="/feed" component={ForYouFeed} />
         <Route path="/prompt-tester" component={PromptTester} />
         </Switch>
-              </div>
+    </div>
 
     </Router>
   );
