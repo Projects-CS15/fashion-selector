@@ -9,10 +9,17 @@ import HomePage from './Pages/HomePage';
 import About from './Pages/About';
 import MyAccount from './Pages/MyAccount';
 
+import Favorites from './Pages/Favorites';
+
+import ForYouFeed from './Pages/ForYouFeed';
+import PromptTester from './components/PromptTester';
+
+
 const Routes = () => {
   return (
     <Router>
       <ResponsiveAppBar />
+    <div className="main-content">
       <LoginStatus />
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -21,7 +28,15 @@ const Routes = () => {
         <Route path="/search" component={ImageSearch} />
         <Route path="/about" component={About} />
         <Route path="/myAccount" component={MyAccount} />
+
+        <Route path="/favorites" component={Favorites} />
       </Switch>
+
+        <Route path="/feed" component={ForYouFeed} />
+        <Route path="/prompt-tester" component={PromptTester} />
+        </Switch>
+              </div>
+
     </Router>
   );
 };

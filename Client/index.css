@@ -12,9 +12,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
+  background-color: #1976D2;
   padding: 10px 20px;
-  position: fixed; /* Fixed position so nav bar stays @ top of page */
+
+  position: fixed;
+  /* Fixed position so nav bar stays @ top of page */
+
   width: 100%;
   z-index: 1000;
 }
@@ -29,12 +32,12 @@ body {
   text-decoration: none;
   margin-left: 20px;
   padding: 10px 20px;
-  background-color: #444;
+  background-color: #2196F3;
   border-radius: 5px;
 }
 
 .navbar-buttons .nav-button:hover {
-  background-color: #555;
+  background-color: #1E88E5;
 }
 
 .homepage {
@@ -67,7 +70,7 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #333;
+  background-color: #1976D2;
   padding: 5px;
   text-align: center;
   z-index: 1000;
@@ -215,7 +218,6 @@ button {
   margin-left: 104px
 }
 
-/* Custom scroll bar styles */
 .image-results::-webkit-scrollbar {
   width: 8px;
 }
@@ -234,12 +236,14 @@ button {
   background: #555;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
   text-decoration: none;
   color: black;
 }
 
-a:hover, a:active {
+a:hover,
+a:active {
   text-decoration: underline;
   color: #2D6C8F;
 }
@@ -250,5 +254,34 @@ a:hover, a:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem; 
+  margin-top: 1rem;
+
+}
+
+
+.surprise-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #1976D2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.surprise-button:hover {
+  background-color: #1565C0;
+}
+
+.gender-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.gender-toggle label {
+  margin-right: 10px;
+  font-size: 16px;
 }

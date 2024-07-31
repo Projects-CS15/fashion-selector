@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SpeechRecognition from './SpeechRecognition';
 
+<<<<<<< HEAD
+function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, currentPrompt }) {
+=======
 function AIGenForm({ onImageGenerated, setLoading, setCurrentImageUrl, setBingData }) {
+>>>>>>> edded58b2851385e2619f257d93134e9eafe83ff
   const [item, setItem] = useState('');
   const [color, setColor] = useState('');
   const [style, setStyle] = useState('');
   const [features, setFeatures] = useState('');
   const [additional, setAdditional] = useState('');
+
+  useEffect(() => {
+    if (currentPrompt) {
+      setItem(currentPrompt.item);
+      setColor(currentPrompt.color);
+      setStyle(currentPrompt.style);
+      setFeatures(currentPrompt.features);
+      setAdditional(currentPrompt.additional);
+    }
+  }, [currentPrompt]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

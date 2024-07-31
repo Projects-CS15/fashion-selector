@@ -9,7 +9,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Routes />
-      <AuthProviderDebugger />
+      {/* <AuthProviderDebugger /> */}
     </AuthProvider>
   );
 };
