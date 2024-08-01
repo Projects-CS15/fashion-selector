@@ -4,6 +4,7 @@ const PORT = process.env.PORT;
 const server1 = `http://localhost:${PORT}`;
 const app = require('../Server/index.js');
 const http = require('http');
+const supabase = require('../supabase');
 
 describe('Route integration', () => {
   let server;
@@ -89,6 +90,16 @@ describe('Route integration', () => {
     describe('/signup', () => {
       describe('POST', () => {
       
+        /**
+         * after creating a test user, delete it:
+         * 
+         * const deleteUser = await supabase
+            .from('profiles')
+            .delete()
+            .eq('id', [ **the ID of the created test user** ]);
+            console.log(`test user ${theDeletedId} deleted`);
+         * 
+         */
       });
     });
   
