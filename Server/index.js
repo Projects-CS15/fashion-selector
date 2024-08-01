@@ -29,9 +29,9 @@ const sessionController = require('./Controllers/sessionController');
 
 dotenv.config();
 
-console.log('Supabase URL:', process.env.SUPABASE_URL); // Add logging
-console.log('Supabase Key:', process.env.SUPABASE_KEY); // Add logging
-console.log('Session Key:', process.env.SESSION_KEY); // Add logging
+// console.log('Supabase URL:', process.env.SUPABASE_URL); // Add logging
+// console.log('Supabase Key:', process.env.SUPABASE_KEY); // Add logging
+// console.log('Session Key:', process.env.SESSION_KEY); // Add logging
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -57,7 +57,7 @@ app.use((req, res, next) => {
       if (err) {
         console.error(`Error saving session: ${err}`);
       } else {
-        console.log(`Session Last Activity: ${req.session.lastActivity}`);
+        // console.log(`Session Last Activity: ${req.session.lastActivity}`);
       }
     });
   }
@@ -69,7 +69,7 @@ app.use((req, res, next) => {
   const now = Date.now();
   if (req.session && req.session.lastActivity) {
     const timeSinceLastActivity = now - req.session.lastActivity;
-    console.log(`Time since last activity: ${timeSinceLastActivity} ms`);
+    // console.log(`Time since last activity: ${timeSinceLastActivity} ms`);
 
     if (timeSinceLastActivity > 50 * 1000 && timeSinceLastActivity < 60 * 1000) {
       const secondsLeft = Math.floor((60 * 1000 - timeSinceLastActivity) / 1000);
@@ -93,7 +93,7 @@ app.use((req, res, next) => {
   const now = Date.now();
   if (req.session && req.session.lastActivity) {
     const timeSinceLastActivity = now - req.session.lastActivity;
-    console.log(`Time since last activity: ${timeSinceLastActivity} ms`);
+    // console.log(`Time since last activity: ${timeSinceLastActivity} ms`);
 
     if (timeSinceLastActivity > 60 * 1000) { // Adjusted for quicker testing
       console.log('Session has timed out. Destroying session.');
@@ -128,6 +128,13 @@ app.get('/api/user-profile/:userId', profileController.getUserProfile);
 app.post('/api/update-profile', profileController.updateProfile);
 
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
-});
+/**
+ * This file exports the Express app without starting the server. This makes it reusable in tests.
+ * Starting up the server with app.listen below breaks supertest - the server will now be started from a separate file, startServer.js
+ */
+
+// app.listen(PORT, () => { 
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+module.exports = app;
