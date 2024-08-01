@@ -28,14 +28,61 @@ describe('Route integration', () => {
     
     describe('/login', () => {
       describe('POST', () => {
-        it('allows user to log in properly', async () => {
+
+        it('responds with a 200 when passed valid credentials', async () => {
           await request(app)
             .post('/api/login')
             .send(
               {email: "austinbfraser@gmail.com", password: "codesmith"}
             )
+            .expect('Content-Type', /application\/json/)
             .expect(200)
         });
+
+        it('responds with a 400 and an error when passed an incorrect password per email', async () => {
+          await request(app)
+            .post('/api/login')
+            .send(
+              {email: "austinbfraser@gmail.com", password: "codesmithZZZ"}
+            )
+            .expect('Content-Type', /application\/json/)
+            .expect(400)
+            .expect((error) => error)
+        });
+      
+        it('responds with a 400 and an error when passed in blank credentials', async () => {
+          await request(app)
+            .post('/api/login')
+            .send(
+              {email: "", password: ""}
+            )
+            .expect('Content-Type', /application\/json/)
+            .expect(400)
+            .expect((error) => error)
+        });
+        
+        it('responds with a 400 and an error when missing email', async () => {
+          await request(app)
+            .post('/api/login')
+            .send(
+              {password: "codesmith"}
+            )
+            .expect('Content-Type', /application\/json/)
+            .expect(400)
+            .expect((error) => error)
+        });
+        
+        it('responds with a 400 and an error when missing password', async () => {
+          await request(app)
+            .post('/api/login')
+            .send(
+              {email: "austinbfraser@gmail.com"}
+            )
+            .expect('Content-Type', /application\/json/)
+            .expect(400)
+            .expect((error) => error)
+        });
+
       });
     });
   
