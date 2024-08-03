@@ -8,28 +8,44 @@ const FeedPost = ({ post }) => {
       <CardMedia
         component="img"
         sx={{ width: 151, cursor: 'pointer' }}
-        image={post.imageUrl}
-        alt={post.title}
+        image={post.photo_url || 'https://via.placeholder.com/150'}
+        alt={post.name}
         onClick={() => alert(`Clicked on ${post.title}`)} // Placeholder for click action
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '10px' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5">
-            {post.title}
+            {post.name}
           </Typography>
           <Typography variant="body2" color="text.secondary" component="p">
-            {post.content}
-          </Typography>
-          <Typography variant="body2" color="text.primary" component="p" sx={{ mt: 1 }}>
-            Posted by: {post.userName}
+            {post.source}
           </Typography>
         </CardContent>
         <Box className="post-info">
-          <Button variant="outlined" onClick={() => alert(`Learn more about ${post.title}`)}>
+          <Button
+            variant="outlined"
+            sx={{
+              backgroundColor: '#000', /* Black background */
+              color: '#fff', /* White text */
+              '&:hover': {
+                backgroundColor: '#333', /* Dark gray background */
+                color: '#fff', /* White text */
+              },
+            }}
+            onClick={() => window.open(post.url, '_blank', 'noopener noreferrer')}
+          >
             Learn More
           </Button>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton aria-label="favorite">
+            <IconButton
+              aria-label="favorite"
+              sx={{
+                color: '#000', /* Black background */
+                '&:hover': {
+                  color: '#333', /* Dark gray background */
+                },
+              }}
+            >
               <StarBorderIcon />
             </IconButton>
             <Typography variant="body2" color="text.secondary">

@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AIGenResult from './AI-Gen-Result';
 import MatchedResults from './Matched-Results';
 import SurpriseMe from './SurpriseMe';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
+import '../index.css'
 
-function PromptTester() {
+function DiscoverPrompt({ userId }) {
   const [currentImageUrl, setCurrentImageUrl] = useState(null);
   const [currentPrompt, setCurrentPrompt] = useState({});
   const [promptType, setPromptType] = useState('detailed');
@@ -106,7 +107,7 @@ function PromptTester() {
     setBingData('');
     setLoadingBing(true);
     try {
-      const response = await axios.post('/api/match-service', { imageUrl: currentImageUrl });
+      const response = await axios.post('/api/match-service/test', { imageUrl: currentImageUrl });
       setBingData(response.data);
     } catch (error) {
       console.error('Error searching Bing:', error.response ? error.response.data : error.message);
@@ -126,6 +127,15 @@ function PromptTester() {
     } catch (error) {
       console.error('Error generating new image:', error.response ? error.response.data : error.message);
       setLoading(false);
+    }
+  };
+
+  const handleAddToFavorites = async (imageUrl) => {
+    try {
+      const response = await axios.post('/api/favorites', { userId, prompt: currentPrompt, imageUrl });
+      console.log('Added to favorites:', response.data);
+    } catch (error) {
+      console.error('Error adding to favorites:', error.response ? error.response.data : error.message);
     }
   };
 
@@ -288,83 +298,98 @@ function PromptTester() {
   };
 
   return (
-    <div className="container">
-      <div className="form-container">
-        <h1>Discover Your Style - TEST PAGE</h1>
-        {currentPrompt && (
-        <div className="prompt-preview">
-          <h2>Prompt Preview:</h2>
-          <p dangerouslySetInnerHTML={{ __html: generatePrompt(promptType, currentPrompt) }}></p>
-        </div>
-      )}
-        <p>THIS IS A TESTING PAGE FOR PROP VARIANTS </p>
-        <div>
-          <label htmlFor="promptType">Select Prompt Type: </label>
-          <select
-            id="promptType"
-            value={promptType}
-            onChange={(e) => {
-              setPromptType(e.target.value);
-              handleButtonClick(e.target.value);
-            }}
-          >
-            <option value="detailed">Detailed</option>
-            <option value="mood">Mood</option>
-            <option value="wearer">Wearer</option>
-            <option value="trend">Trend</option>
-          </select>
-        </div>
-        <form>
-          {renderPromptFields()}
-          <button
-            type="button"
-            onClick={() => {
-              handleGenerateImage();
-              handleButtonClick('generate');
-            }}
-            className={activeButtons['generate'] ? 'active' : ''}
-          >
-            Generate Image
-          </button>
-        </form>
-        <SurpriseMe
-          onSurprise={handleSurprise}
-          handleButtonClick={handleButtonClick}
-          activeButtons={activeButtons}
-        />
-        <br />
-        {loading && (
-          <div style={{ textAlign: 'center' }}>
-            <CircularProgress />
-            <p>Finding Your Style...</p>
+    <>
+      <div className="spacer"></div>
+      <div className="containerOuter">
+        <div className="container">
+          <div className="form-container">
+            <p className="discover">Discover your style</p>
+            <h3 className="fashion">Art</h3>
+            <hr />
+            <div className="discoverContainer">
+              <label htmlFor="promptType">Select Prompt Type: </label>
+              <select
+                id="promptType"
+                value={promptType}
+                onChange={(e) => {
+                  setPromptType(e.target.value);
+                  handleButtonClick(e.target.value);
+                }}
+              >
+                <option value="detailed">Detailed</option>
+                <option value="mood">Mood</option>
+                <option value="wearer">Wearer</option>
+                <option value="trend">Trend</option>
+              </select>
+            </div>
+            <div className="discoverClass">
+              <form>
+                {renderPromptFields()}
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleGenerateImage();
+                    handleButtonClick('generate');
+                  }}
+                  className={activeButtons['generate'] ? 'active' : ''}
+                >
+                  Generate Image
+                </button>
+              </form>
+              <hr />
+            </div>
+            <SurpriseMe
+              onSurprise={handleSurprise}
+              handleButtonClick={handleButtonClick}
+              activeButtons={activeButtons}
+            />
+            <br />
           </div>
-        )}
-        {currentImageUrl && (
-          <AIGenResult
-            imageUrl={currentImageUrl}
-            onTryAgainClick={() => {
-              handleTryAgainClick();
-              handleButtonClick('tryAgain');
-            }}
-            onFindMatchingItemsClick={() => {
-              handleFindMatchingItemsClick();
-              handleButtonClick('findMatching');
-            }}
-          />
-        )}
-      </div>
-      {bingData ? (
-        <MatchedResults bingData={bingData} />
-      ) : (
-        <div style={{ width: '500px' }}></div>
-      )}
-      {loadingBing && (
-        <div style={{ textAlign: 'center' }}>
-          <LinearProgress />
-          <p>Finding Matching Items...</p>
+          <div className="rightContainer">
+            {loading && (
+              <div className="dallEProgress" style={{ textAlign: 'center' }}>
+                <CircularProgress />
+                <p>Finding Your Style...</p>
+              </div>
+            )}
+            {currentImageUrl && (
+              <>
+                <AIGenResult
+                  imageUrl={currentImageUrl}
+                  onTryAgainClick={() => {
+                    handleTryAgainClick();
+                    handleButtonClick('tryAgain');
+                  }}
+                  onFindMatchingItemsClick={() => {
+                    handleFindMatchingItemsClick();
+                    handleButtonClick('findMatching');
+                  }}
+                  onAddToFavoritesClick={handleAddToFavorites} 
+                />
+              </>
+            )}
+            {bingData ? (
+              <MatchedResults 
+                bingData={bingData} 
+                currentImageUrl={currentImageUrl} 
+                currentPrompt={currentPrompt} 
+                userId={userId} 
+              />
+            ) : (
+              <div style={{ width: '500px' }}></div>
+            )}
+            {loadingBing && (
+              <div style={{ textAlign: 'center' }}>
+                <LinearProgress />
+                <p>Finding Matching Items...</p>
+              </div>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+      </div>
+      <div className="spacerBottom"></div>
+    </>
   );
 }
-export default PromptTester;
+
+export default DiscoverPrompt;

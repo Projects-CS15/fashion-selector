@@ -3,7 +3,7 @@ import { Container, Typography, Paper } from '@mui/material';
 
 const About = () => {
   return (
-    <Container maxWidth="md" style={{ marginTop: '100px' }}> {/* Adjust marginTop as needed */}
+    <Container maxWidth="md" style={{ marginTop: '100px' }}> 
       <Paper elevation={3} style={{ padding: '20px', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>
         <Typography variant="h2" gutterBottom>
           About Fashion Selector

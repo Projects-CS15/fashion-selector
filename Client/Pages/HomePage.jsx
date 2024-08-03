@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from '../Auth/Login'; // Adjust the path as needed
+import Login from '../Auth/Login'; 
 
 const HomePage = () => {
   return (

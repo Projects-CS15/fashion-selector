@@ -2,8 +2,7 @@ body {
   height: 100%;
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-image: linear-gradient(#2D6C8F, #999999);
+  background: linear-gradient(#2D6C8F, #999999);
   color: #999999;
   background-attachment: fixed;
 }
@@ -14,30 +13,9 @@ body {
   align-items: center;
   background-color: #1976D2;
   padding: 10px 20px;
-
   position: fixed;
-  /* Fixed position so nav bar stays @ top of page */
-
   width: 100%;
   z-index: 1000;
-}
-
-.navbar-brand {
-  color: #fff;
-  font-size: 1.5em;
-}
-
-.navbar-buttons .nav-button {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 20px;
-  padding: 10px 20px;
-  background-color: #2196F3;
-  border-radius: 5px;
-}
-
-.navbar-buttons .nav-button:hover {
-  background-color: #1E88E5;
 }
 
 .homepage {
@@ -50,16 +28,21 @@ body {
 }
 
 .generatedImg {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 400px; 
+  max-height: 400px;
   height: auto;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .imgBtnContainer {
-  /* background-color: blue; */
   display: flex;
-  align-items: flex-end;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.imgBtnContainer button {
+  margin: 0 10px;
 }
 
 .dallEProgress {
@@ -107,18 +90,40 @@ body {
   border-radius: 10px;
 }
 
-.form-container {
+.form-container, .form-container2 {
   background-color: white;
   border-radius: 10px;
-  padding: 10px;
-  width: 260px;
-  max-height: 400px;
+  padding: 10px 15px; /* Reduced padding to fit content */
+  width: 300px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.form-container2 {
-  /* background-color: red; */
-  border-radius: 10px;
-  max-height: 400px;
+.form-group {
+  width: 100%;
+  margin-bottom: 10px; /* Reduced margin to save space */
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+input, select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  box-sizing: border-box;
+}
+
+button.generateImage {
+  padding: 10px 20px;
+  margin-top: 10px; /* Adjusted margin to fit inside the box */
+  cursor: pointer;
 }
 
 .rightContainer {
@@ -128,23 +133,31 @@ body {
   align-items: center;
 }
 
+.discoverContainer {
+  padding: 10px;
+  width: 260px;
+  max-height: 400px;
+}
+
 .discover {
   margin-left: 10px;
   margin-bottom: 5px;
+  font-size: 16px;
 }
 
 .fashion {
   margin-left: 10px;
-  margin-top: 0px;
-  color: black
+  margin-top: 0;
+  color: black;
+  font-size: 14px;
+  margin-bottom: 10px; /* Reduced margin to save space */
 }
 
 .generated-image {
   display: flex;
-  text-align: center;
-  border-radius: 5px;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
 }
 
 .bingContainer {
@@ -172,24 +185,39 @@ body {
 }
 
 .searchResults {
-  color: white;
-  text-align: left;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.matchedImage {
+  max-width: 150%;
+  height: auto;
+  border-radius: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .matchedResult {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   background-color: white;
-  margin: 5px 5px 5px 5px;
+  text-align: center;
+  margin: 20px;
   border-radius: 5px;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-content: space-between;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
+}
+
+
+.image-link {
+  display: inline-block;
 }
 
 .star {
@@ -203,20 +231,29 @@ button {
   margin: 5px;
   padding: 5px;
   height: 30px;
-  background-color: #2C2C2C;
-  color: #F5F5F5;
+  background-color: #000;
+  color: #fff;
   border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button.active {
+  background-color: #000;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #333;
+  color: #fff;
 }
 
 .speechButton {
-  margin-right: 0px;
+  margin-right: 0;
+  text-align: center;
   font-size: x-small;
   height: 22px;
-}
-
-.generateImage {
-  margin-top: 20px;
-  margin-left: 104px
 }
 
 .image-results::-webkit-scrollbar {
@@ -249,21 +286,17 @@ a:active {
   color: #2D6C8F;
 }
 
-
-/* Adding centering for the the CircularProgress component */
 .center-loading {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-
 }
-
 
 .surprise-button {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #1976D2;
+  background-color: #000;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -272,7 +305,7 @@ a:active {
 }
 
 .surprise-button:hover {
-  background-color: #1565C0;
+  background-color: #333;
 }
 
 .gender-toggle {

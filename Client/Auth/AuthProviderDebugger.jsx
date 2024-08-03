@@ -1,7 +1,8 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { useAuth } from './AuthContext'; 
+import { useAuth } from './AuthContext';
+
 
 const style = {
   position: 'fixed',

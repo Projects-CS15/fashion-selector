@@ -9,15 +9,15 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { useAuth } from '../Auth/AuthContext';
 
 const pagesLoggedOut = ['Login', 'Sign Up', 'About'];
-const pagesLoggedIn = ['Search', 'Feed', 'Favorites'];
+const pagesLoggedIn = ['Search', 'Feed', 'Favorites', 'Art', 'Discover'];
 const settings = ['My Account', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -60,6 +60,12 @@ function ResponsiveAppBar() {
       case 'About':
         history.push('/about');
         break;
+      case 'Art':
+        history.push('/art');
+        break;
+      case 'Discover':
+        history.push('/discover');
+        break;
       default:
         console.log('Unknown page:', page);
     }
@@ -101,19 +107,25 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="fixed" sx={{ backgroundColor: '#333' }}>
+    <AppBar position="fixed" sx={{ background: '#fff' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, color: 'black' }}
           >
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Tabs value={tabValue} onChange={handleTabChange} textColor="w" indicatorColor="secondary">
+            <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              textColor="inherit"
+              indicatorColor="primary"
+              sx={{ '& .MuiTab-root': { color: 'black' } }}
+            >
               {pages.map((page, index) => (
                 <Tab key={page} label={page} />
               ))}
@@ -148,7 +160,7 @@ function ResponsiveAppBar() {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={() => handleUserMenuClick(setting)}>
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Typography textAlign="center" sx={{ color: 'black' }}>{setting}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -163,7 +175,7 @@ function ResponsiveAppBar() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: 'black' }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -185,7 +197,7 @@ function ResponsiveAppBar() {
             >
               {pages.map((page, index) => (
                 <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography textAlign="center" sx={{ color: 'black' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
