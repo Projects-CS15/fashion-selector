@@ -1,14 +1,14 @@
 const { createClient } = require("@supabase/supabase-js");
 require("dotenv").config();
 
-const supabaseUrl = "https://zztxrkhfcilrdciqdsqn.supabase.co";
+const supabaseUrl = "https://lcrvtqwzfotayluyrocd.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function insertItemsToDatabase(items) {
+async function insertItemsToDatabase(items, client = supabase) {
   try {
     const { data, error } = await supabase.from("item").insert(items).select();
-
+    console.log("data: ", data)
     if (error) {
       console.error("Error inserting items:", error.message);
     } else {

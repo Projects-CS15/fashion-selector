@@ -1,5 +1,6 @@
 const fashionAdvisorController = {};
 const dotenv = require('dotenv');
+const fs = require('fs');
 
 dotenv.config();
 // console.log(dotenv.config())
@@ -7,6 +8,7 @@ dotenv.config();
 
 const endpoint = 'https://api.bing.microsoft.com/v7.0/images/visualsearch';
 const endpoint_openai = 'https://api.openai.com/v1/images/generations';
+const endpoint_openai_edit = 'https://api.openai.com/v1/images/edits';
 // console.log('can you read this',process.env);
 const subscriptionKey = process.env.SUBSCRIPTION_KEY;
 const openai_key = process.env.OPENAI_API_KEY;
@@ -25,7 +27,7 @@ fashionAdvisorController.ImgGenService = async (req, res, next) => {
   if (!item || !color || !style || !features) {
     return res
       .status(400)
-      .json({ error: "Item, color, style or features is missing." });
+      .json({ error: 'Item, color, style or features is missing.' });
   }
 
   try {
@@ -35,10 +37,10 @@ fashionAdvisorController.ImgGenService = async (req, res, next) => {
     The item should be 100% within the image border.`;
 
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${openai_key}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         prompt: prompt,
@@ -46,7 +48,7 @@ fashionAdvisorController.ImgGenService = async (req, res, next) => {
       }),
     };
 
-    console.log("Options: ", options);
+    console.log('Options: ', options);
 
     const response = await fetch(endpoint_openai, options);
 
@@ -58,10 +60,71 @@ fashionAdvisorController.ImgGenService = async (req, res, next) => {
 
     res.json({ image_url });
   } catch (error) {
-    console.error("Dall E Image Generator Error: ", error);
+    console.error('Dall E Image Generator Error: ', error);
     res
       .status(500)
-      .json({ error: "An error occurred on Dall E Image Generator." });
+      .json({ error: 'An error occurred on Dall E Image Generator.' });
+  }
+};
+
+function dataURLtoFile(dataurl, filename) {
+  const arr = dataurl.split(',');
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[arr.length - 1]);
+  let n = bstr.length;
+  let u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}
+fashionAdvisorController.ImgEditService = async (req, res, next) => {
+ 
+  
+  
+  try {
+
+    const imageFile = dataURLtoFile(req.body.uploadImage, 'image.png');
+    const prompt = `A realistic photograph of a ${req.body.item}.`
+    const form = new FormData();
+    form.append('prompt', prompt);
+    form.append('image', imageFile);
+    form.append('n', 1);
+    form.append('size', '512x512');
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${openai_key}`,
+      },
+      body: form,
+
+    };
+
+    console.log('Options: ', options);
+
+    const response = await fetch(endpoint_openai_edit, options);
+
+    const data = await response.json();
+    //console.log(data);
+
+    const openai_url = data.data[0].url;
+    console.log(openai_url);
+    
+    //fetches png from openai link and processes until it's a string that can be returned to the client
+    const image_data = await fetch(openai_url);
+    const image_blob = await image_data.blob();
+    const image_array = await image_blob.arrayBuffer();
+    const image_buffer = Buffer.from(image_array );
+    const image_string = image_buffer.toString('base64')
+    res.locals.url = 'data:image/png;base64,'.concat(image_string)
+
+    return next();
+
+  } catch (error) {
+    console.error('Dall E Image Generator Error: ', error);
+    res
+      .status(500)
+      .json({ error: 'An error occurred on Dall E Image Generator.' });
   }
 };
 
@@ -128,5 +191,67 @@ fashionAdvisorController.matchService = async (req, res, next) => {
     res.status(500).json({ error: 'An error occurred on Visual Search.' });
   }
 };
+
+fashionAdvisorController.uploadMatch = async (req, res, next) => {
+
+
+  try {
+    // const knowledgeRequest = JSON.stringify({
+    //   invokedSkills:["SimilarProducts"]
+    // });
+    const imageFile = dataURLtoFile(req.body.uploadImage, 'image.png');
+    //const { imageUrl } = req.body; //Dall-e's image url is in req.body
+    if (!imageFile) {
+      return res.status(400).json({ error: 'Image is required' });
+    }
+
+ 
+
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    // formData.append('knowledgeRequest', knowledgeRequest);
+
+    const params = new URLSearchParams({ mkt: 'en-us', name: 'image', filename: 'image.png' });
+
+    const response = await fetch(`${endpoint}?${params}`, {
+      method: 'POST',
+      headers: {
+        'Ocp-Apim-Subscription-Key': subscriptionKey,
+        'Content-Disposition': 'form-data'
+      },
+      body: formData,
+    });
+    console.log(response);
+    if (!response.ok) {
+      console.error(`Bing API Error: ${response.status}`);
+      return res.status(response.status).json({
+        error: `Bing API request failed with status ${response.status}`,
+      });
+    }
+
+    const data = await response.json();
+
+    const simplifiedData = data.tags[0].actions
+      .filter((action) => action.actionType === 'VisualSearch')
+      .flatMap((action) => action.data.value)
+      .map((item) => ({
+        contentUrl: item.contentUrl,
+        hostPageUrl: item.hostPageUrl,
+        name: item.name,
+      }))
+      .filter(
+        (item) =>
+          item.contentUrl.toLowerCase().includes('shop') ||
+          item.hostPageUrl.toLowerCase().includes('shop')
+      );
+
+    res.json(simplifiedData);
+    // return next();
+  } catch (error) {
+    console.error('Visual Search Error:', error);
+    res.status(500).json({ error: 'An error occurred on Visual Search.' });
+  }
+};
+
 
 module.exports = fashionAdvisorController;
