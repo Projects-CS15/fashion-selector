@@ -5,6 +5,7 @@ import { Typography, CircularProgress, Snackbar, Alert } from '@mui/material';
 import { useAuth } from './AuthContext';
 import AuthNavigationButton from './AuthNavigationButton';
 import '../styles/AuthForm.css';
+//please work
 
 /**
  * User-side functionality for existing user at login and route path

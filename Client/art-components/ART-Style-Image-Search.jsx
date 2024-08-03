@@ -1,36 +1,32 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import AIGenForm from './AI-Gen-Form';
-import AIGenResult from './AI-Gen-Result';
-import MatchedResults from './Matched-Results';
+import ArtPromptForm from './ART-AI-Gen-Form';
+import AIGenResult from './ART-AI-Gen-Result';
+import MatchedArtResults from './ART-Matched-Results';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
 
-function StyleImageSearchPage({  userId }) {
-  const [currentImageUrl, setCurrentImageUrl] = useState(null);
-  const [currentPrompt, setCurrentPrompt] = useState('');
-  const [bingData, setBingData] = useState('');
+
+function ArtPromptTester({userId}) {
   const [loading, setLoading] = useState(false);
+  const [currentImageUrl, setCurrentImageUrl] = useState(null);
+  const [promptDetails, setPromptDetails] = useState(null);
+  const [bingData, setBingData] = useState([]);
   const [loadingBing, setLoadingBing] = useState(false);
 
-  const handleImageGenerated = (imageUrl, prompt) => {
+  const handleImageGenerated = (imageUrl, details) => {
     setCurrentImageUrl(imageUrl);
-    setCurrentPrompt(prompt);
+    setPromptDetails(details);
     setLoading(false);
   };
 
   const handleTryAgainClick = async () => {
-    setCurrentImageUrl(null);
+        setCurrentImageUrl(null);
     setLoading(true);
     try {
-      const response = await axios.post('/api/generate-image', {
-        item: currentPrompt.item,
-        color: currentPrompt.color,
-        style: currentPrompt.style,
-        features: currentPrompt.features,
-      });
-      handleImageGenerated(response.data.image_url, currentPrompt);
-    } catch (error) {
+      const response = await axios.post('/api/generate-art-image', { promptDetails, userId });
+      handleImageGenerated(response.data.image_url, promptDetails);
+   } catch (error) {
       console.error('Error generating new image:', error);
     } finally {
       setLoading(false);
@@ -41,18 +37,16 @@ function StyleImageSearchPage({  userId }) {
     setBingData('');
     setLoadingBing(true);
     try {
-      const response = await axios.post('/api/match-service', {
-        imageUrl: currentImageUrl,
-      });
+      const response = await axios.post('/api/match-art-service', { imageUrl: currentImageUrl, userId });
       setBingData(response.data);
     } catch (error) {
-      console.error('Error searching Bing:', error);
+      console.error('Error searching Bing:', error.response ? error.response.data : error.message);
     } finally {
       setLoadingBing(false);
     }
   };
 
-   return (
+  return (
     <>
       <div className="spacer"></div>
       <div className="containerOuter">
@@ -61,11 +55,11 @@ function StyleImageSearchPage({  userId }) {
             <p className="discover">Search your style</p>
             <h3 className="fashion">Fashion, Art, Furniture</h3>
             <hr />
-            <AIGenForm
+            <ArtPromptForm
               onImageGenerated={handleImageGenerated}
               setLoading={setLoading}
               setCurrentImageUrl={setCurrentImageUrl}
-              currentPrompt={currentPrompt}
+              currentPrompt={promptDetails}
             />
             <br />
           </div> 
@@ -84,10 +78,10 @@ function StyleImageSearchPage({  userId }) {
               />
             )}
             {bingData ? (
-              <MatchedResults 
-                bingData={bingData} 
-                currentImageUrl={currentImageUrl} 
-                currentPrompt={currentPrompt} 
+              <MatchedArtResults
+                bingData={bingData}
+                currentImageUrl={currentImageUrl}
+                currentPrompt={promptDetails}
                 userId={userId}
               />
             ) : (
@@ -107,4 +101,4 @@ function StyleImageSearchPage({  userId }) {
   );
 }
 
-export default StyleImageSearchPage;
+export default ArtPromptTester;
