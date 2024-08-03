@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3003;
 
-// Controllers
+// Controllers  
 const authController = require('./Controllers/authController');
 const openaiImageController = require('./Controllers/openaiImageController');
 const bingSearchController = require('./Controllers/bingSearchController');
@@ -26,84 +26,9 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// //sessions middleware
-// app.use(session({
-//   secret: 'Session Key', // in .env
-//   resave: false, // causes session to be saved back to the session store, even if it wasn't modified during the request
-//   saveUninitialized: false, // if there is no session, does it save it to the session store?
-//   cookie: { 
-//     secure: false, // does it have to use https? in dev it doesnt need to  
-//     httpOnly: true, // xss prevention starts with you
-//     maxAge: 24 * 60 * 60 * 1000 // 1 day lifespan
-//   }
-// }));
+const upload = multer({ storage: multer.memoryStorage() });
 
-// // Track activity and reset session timer
-// app.use((req, res, next) => {
-//   if (req.session) {
-//     req.session.lastActivity = Date.now();
-//     req.session.save(err => {
-//       if (err) {
-//         console.error(`Error saving session: ${err}`);
-//       } else {
-//         // console.log(`Session Last Activity: ${req.session.lastActivity}`);
-//       }
-//     });
-//   }
-//   next();
-// });
-
-// // Prompt user after 50 seconds and show countdown modal
-// app.use((req, res, next) => {
-//   const now = Date.now();
-//   if (req.session && req.session.lastActivity) {
-//     const timeSinceLastActivity = now - req.session.lastActivity;
-//     // console.log(`Time since last activity: ${timeSinceLastActivity} ms`);
-
-//     if (timeSinceLastActivity > 50 * 1000 && timeSinceLastActivity < 60 * 1000) {
-//       const secondsLeft = Math.floor((60 * 1000 - timeSinceLastActivity) / 1000);
-//       req.session.countdownModal = {
-//         show: true,
-//         secondsLeft
-//       };
-//       console.log(`Session Countdown Modal: ${JSON.stringify(req.session.countdownModal)}`);
-//       req.session.save(err => {
-//         if (err) {
-//           console.error(`Error saving session: ${err}`);
-//         }
-//       });
-//     }
-//   }
-//   next();
-// });
-
-// // Destroy session after 60 seconds of inactivity
-// app.use((req, res, next) => {
-//   const now = Date.now();
-//   if (req.session && req.session.lastActivity) {
-//     const timeSinceLastActivity = now - req.session.lastActivity;
-//     // console.log(`Time since last activity: ${timeSinceLastActivity} ms`);
-
-//     if (timeSinceLastActivity > 60 * 1000) { // Adjusted for quicker testing
-//       console.log('Session has timed out. Destroying session.');
-//       req.session.destroy(err => {
-//         if (err) {
-//           console.error(`Error destroying session: ${err}`);
-//         } else {
-//           return res.status(401).send('Session has timed out. Please log in again.');
-//         }
-//       });
-//     }
-//   }
-//   next();
-// });
-
-
-
-// // Routes
-// // SESSION STATUS
-// app.get('/api/session-status', sessionController.getSessionStatus);
-
+// Account Management
 app.post('/api/signup', authController.signup);
 app.post('/api/login', authController.login);
 
