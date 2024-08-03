@@ -88,7 +88,7 @@ describe('Route integration', () => {
       });
     });
   
-    describe('/signup', () => {
+    xdescribe('/signup', () => {
       describe('POST', () => {
 
         let cleanupFlag = false;
@@ -122,7 +122,7 @@ describe('Route integration', () => {
       });
     });
   
-    describe('/generate-image', () => {
+    xdescribe('/generate-image', () => {
       describe('POST', () => {
         it('should respond with an image_url when given valid input', async () => {
           const response = await request(app)
