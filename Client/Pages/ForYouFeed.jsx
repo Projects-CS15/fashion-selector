@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FeedPost from '../components/FeedPost';
 import { Box, Container, Typography } from '@mui/material';
+import axios from 'axios';
 import '../styles/feed.css';
 
 /**
@@ -16,49 +17,31 @@ const ForYouFeed = () => {
   useEffect(() => {
     // Function to load posts
     const fetchData = async () => {
-      // Simulate network requests for getting all the posts -- pause fetchData execution
-      // until the promise resolves after the callback timer waits 1 second
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Set the state to the posts we got
-      setFeedPosts(generatePosts());
+      try {
+        // Fetch all matches from the backend
+        const response = await axios.get('/api/matches');
+        setFeedPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching feed posts:', error);
+      }
     };
+
     // Call the async requests immediately after declared
-    // Promise resolves after second (exponential, )
     fetchData();
   }, []); // [] - only 1x after initial render
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom sx={{ mt: 4 }}>
+      <Typography variant="h2" gutterBottom sx={{ mt: 20 }}>
         See what's trending
-      </Typography>
-      <Typography variant="subtitle1" gutterBottom>
-        Subheading
       </Typography>
       <div className="feed-container">
         {feedPosts.map((feedPost) => (
-          <FeedPost key={feedPost.id} post={feedPost} />
+          <FeedPost key={feedPost.match_id} post={feedPost} />
         ))}
       </div>
     </Container>
   );
-};
-
-/**
- * TESTING DATA
- * @returns 
- */
-const generatePosts = () => {
-  const titles = ['First Post', 'Second Post', 'Third Post'];
-  return titles.map((title, index) => ({
-    id: index + 1, // Post ID
-    userId: index + 100,
-    title,
-    content: `${title} content`,
-    imageUrl: 'https://via.placeholder.com/150',
-    userName: `User ${index + 1}`,
-    heartCount: Math.floor(Math.random() * 10),
-  }));
 };
 
 export default ForYouFeed;

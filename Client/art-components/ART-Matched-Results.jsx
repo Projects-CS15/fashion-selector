@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import MatchedResult from './Matched-Result';
+import '../index.css';
+import MatchedArtResult from './ART-Matched-Result';
 
-function MatchedResults({ bingData, currentImageUrl, currentPrompt, userId }) {
+function MatchedArtResults({ bingData, currentImageUrl, currentPrompt, userId }) {
   useEffect(() => {
-    console.log('MatchedResults component loaded');
+    console.log('MatchedArtResults component loaded');
     console.log('Number of results:', bingData.length);
     console.log('bingData:', bingData);
     console.log('currentImageUrl:', currentImageUrl);
@@ -17,7 +18,7 @@ function MatchedResults({ bingData, currentImageUrl, currentPrompt, userId }) {
     <div className="bingContainer">
     <div className="image-results">
         {bingData.map((image, index) => (
-          <MatchedResult 
+          <MatchedArtResult 
             key={index} 
             image={image} 
             currentImageUrl={currentImageUrl} 
@@ -31,4 +32,5 @@ function MatchedResults({ bingData, currentImageUrl, currentPrompt, userId }) {
   );
 }
 
-export default MatchedResults;
+
+export default MatchedArtResults;

@@ -1,36 +1,29 @@
-.surprise-me-container {
-  text-align: center;
-  margin-top: 20px;
+button {
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button.active {
+  background-color: #000; /* Black background for active state */
+  color: #fff; /* White text for active state */
+}
+
+button:hover {
+  background-color: #333; /* Dark gray background for hover state */
+  color: #fff; /* White text for hover state */
 }
 
 .gender-buttons {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
-.gender-buttons .MuiButton-root {
-  background-color: #E0E0E0;
-  color: #333;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.gender-buttons .MuiButton-root.selected {
-  background-color: #1976D2;
-  color: #fff;
-}
-
-.surprise-button {
-  padding: 10px 20px;
-  background-color: #1976D2;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.surprise-button:hover {
-  background-color: #1565C0;
+.surprise-me-container {
+  text-align: center;
 }

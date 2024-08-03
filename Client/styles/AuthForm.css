@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #E3F2FD;
 }
 
 .auth-form {
@@ -41,13 +40,13 @@
 
 .auth-form button {
   padding: 10px 20px;
-  background-color: #1976D2;
-  color: #fff;
+  background-color: #000; /* Black background */
+  color: #fff; /* White text */
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .auth-form button:hover {
-  background-color: #1565C0;
+  background-color: #333; /* Dark gray background */
 }
